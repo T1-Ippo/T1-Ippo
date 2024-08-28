@@ -1,0 +1,99 @@
+# Definición de la clase Persona
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def __str__(self):
+        return f"Nombre: {self.nombre}, Edad: {self.edad}"
+
+
+# Definición de la clase Estudiante que hereda de Persona
+class Estudiante(Persona):
+    def __init__(self, nombre, edad, matricula):
+        super().__init__(nombre, edad)
+        self.matricula = matricula
+        self.materias_aprobadas = []
+
+    def agregar_materia_aprobada(self, materia):
+        self.materias_aprobadas.append(materia)
+
+    def __str__(self):
+        return f"Estudiante - {super().__str__()}, Matrícula: {self.matricula}"
+
+
+# Definición de la clase Profesor que hereda de Persona
+class Profesor(Persona):
+    def __init__(self, nombre, edad, especialidad):
+        super().__init__(nombre, edad)
+        self.especialidad = especialidad
+        self.materias_asignadas = []
+
+    def asignar_materia(self, materia):
+        self.materias_asignadas.append(materia)
+
+    def __str__(self):
+        return f"Profesor - {super().__str__()}, Especialidad: {self.especialidad}"
+
+
+# Definición de la clase Materia
+class Materia:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.estudiantes = []
+        self.profesores = []
+
+    def asignar_estudiante(self, estudiante):
+        self.estudiantes.append(estudiante)
+
+    def asignar_profesor(self, profesor):
+        self.profesores.append(profesor)
+
+    def listar_estudiantes(self):
+        print(f"Estudiantes inscritos en {self.nombre}:")
+        for estudiante in self.estudiantes:
+            print(estudiante)
+
+    def listar_profesores(self):
+        print(f"Profesores asignados a {self.nombre}:")
+        for profesor in self.profesores:
+            print(profesor)
+
+
+# Creación de objetos de ejemplo y simulación de interacción
+estudiante1 = Estudiante("Ana", 20, "2021001")
+estudiante2 = Estudiante("Juan", 21, "2021002")
+
+profesor1 = Profesor("Maria", 35, "Matemáticas")
+profesor2 = Profesor("Pedro", 40, "Historia")
+
+materia1 = Materia("Matemáticas")
+materia2 = Materia("Historia")
+
+materia1.asignar_estudiante(estudiante1)
+materia1.asignar_estudiante(estudiante2)
+materia1.asignar_profesor(profesor1)
+profesor1.asignar_materia(materia1)
+
+materia2.asignar_estudiante(estudiante2)
+materia2.asignar_profesor(profesor2)
+profesor2.asignar_materia(materia2)
+
+# Simulación de aprobación de una materia por un estudiante
+estudiante1.agregar_materia_aprobada(materia1)
+
+# Mostrar información detallada
+print("Información detallada del sistema:")
+print("-----------------------------")
+print("Estudiantes inscritos en cada materia:")
+materia1.listar_estudiantes()
+materia2.listar_estudiantes()
+
+print("\nProfesores asignados a cada materia:")
+materia1.listar_profesores()
+materia2.listar_profesores()
+
+print("\nMaterias aprobadas por cada estudiante:")
+print(f"{estudiante1.nombre} ha aprobado las siguientes materias:")
+for materia_aprobada in estudiante1.materias_aprobadas:
+    print(materia_aprobada.nombre)
